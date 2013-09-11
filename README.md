@@ -1,4 +1,4 @@
 sinatra-redis-example
 =====================
 
-Sinatra Redis playground
+#Sinatra Redis playground
