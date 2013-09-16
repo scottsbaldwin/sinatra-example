@@ -1,0 +1,52 @@
+---
+- name: Install packages (monit, nginx)
+  action: apt pkg=$item state=present
+  sudo: yes
+  with_items:
+    - nginx
+    - monit
+- service: name=nginx state=started
+  sudo: yes
+- name: Configure nginx
+  action: template src=nginx.conf.j2 dest=/etc/nginx/nginx.conf
+  sudo: yes
+  notify:
+  - reload nginx
+- name: monit config
+  action: template src=monitrc.j2 dest=/etc/monit/monitrc
+  sudo: yes
+  notify:
+  - restart monit
+- name: Setup app folders 
+  action: file dest=/opt/${app}/shared/log owner=vagrant group=vagrant state=directory
+  sudo: yes
+- action: file dest=/opt/${app}/shared/config owner=vagrant group=vagrant state=directory
+  sudo: yes
+- action: file dest=/opt/${app} owner=vagrant group=vagrant state=directory recurse=true
+  sudo: yes
+- action: file dest=/var/run/${app} owner=vagrant group=vagrant state=directory
+  sudo: yes
+- name: Link to /vagrant
+  action: file dest=/opt/${app}/current src=/vagrant state=link
+- name: Configure monit for Unicorn
+  action: template src=unicorn.monitrc.j2 dest=/etc/monit/conf.d/unicorn_${app}.monitrc owner=vagrant
+  sudo: yes
+  notify:
+  - restart monit
+- name: Configure Unicorn start script
+  action: template src=unicorn_start.sh.j2 dest=/opt/${app}/shared/config/unicorn_start.sh mode=0755 owner=vagrant
+- name: Configure Unicorn stop script
+  action: template src=unicorn_stop.sh.j2 dest=/opt/${app}/shared/config/unicorn_stop.sh mode=0755 owner=vagrant
+- name: Configure Unicorn for App
+  action: template src=unicorn.rb.j2 dest=/opt/${app}/shared/config/unicorn.rb owner=vagrant
+- name: Create nginx sites-enabled
+  action: file dest=/etc/nginx/servers owner=vagrant state=directory
+  sudo: yes
+- name: Configure nginx for App
+  action: template src=app.conf.j2 dest=/etc/nginx/servers/${app}.conf owner=vagrant
+  notify:
+  - reload nginx
+- name: Install bundler
+  action: command sudo gem install bundler creates=/usr/local/bin/bundle
+- name: Bundle the gems
+  action: command bundle install chdir=/opt/${app}/current
