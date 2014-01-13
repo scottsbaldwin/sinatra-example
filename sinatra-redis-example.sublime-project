@@ -1,0 +1,10 @@
+{
+	"folders":
+	[
+		{
+            "file_exclude_patterns":[".ruby-version", "Gemfile.lock", "*.sublime-project"],
+			"follow_symlinks": true,
+			"path": "."
+		}
+	]
+}
