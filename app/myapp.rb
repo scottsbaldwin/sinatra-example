@@ -16,11 +16,11 @@ class MyApp < Sinatra::Base
   end
 
   get '/testing' do
-    "Testing"
+    "Testing2"
   end
 
   get '/reload2' do
-    "Ok"
+    "Blah"
   end
 
 end
