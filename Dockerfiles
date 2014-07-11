@@ -1,0 +1,13 @@
+FROM ruby2.1 
+
+ADD . /opt/sinatra-example
+RUN bundle install --gemfile /opt/sinatra-example/Gemfile
+ENV BUNDLE_GEMFILE /opt/sinatra-example/Gemfile
+
+# Add Sinatra-Example to runit
+RUN mkdir /etc/service/sinatra-example
+ADD run_example.sh /etc/service/sinatra-example/run
+RUN chown root /etc/service/sinatra-example/run
+
+EXPOSE 22 9292
+CMD ["/sbin/my_init"]
