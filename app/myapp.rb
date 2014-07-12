@@ -15,6 +15,10 @@ class MyApp < Sinatra::Base
     erb :index
   end
 
+  get '/test' do
+      "Testing 1 2 3"
+  end
+
   get '/testing' do
     "Testing2"
   end
