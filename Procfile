@@ -1,1 +1,1 @@
-web: bundle exec thin start -e $RACK_ENV -p $PORT
+web: bin/start-nginx bundle exec thin start -e $RACK_ENV -p $PORT
