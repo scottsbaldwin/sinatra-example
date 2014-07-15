@@ -1,7 +1,6 @@
 {
     "name": "sinatra-redis-example",
     "dependencies": {
-        ...
         "grunt": "*",
         "grunt-contrib": "*",
         "less": "*"
