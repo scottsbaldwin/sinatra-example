@@ -37,6 +37,7 @@ http {
 
         location ~ .+\.(js|css|png|jpg|jpeg|gif) {
             root ./public;
+            try_files $uri $uri/ =404;
         }
 
         location / {
