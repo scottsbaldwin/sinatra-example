@@ -4,5 +4,4 @@ rvm:
 - 2.1.5
 
 script: 
-  #- rspec -f JUnit -o shippable/testresults/results.xml
-- rspec
+- rspec -f RspecJunitFormatter -o shippable/testresults/results.xml

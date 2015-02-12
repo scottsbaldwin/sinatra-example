@@ -8,5 +8,6 @@ gem 'thin'
 
 group :development, :test do
     gem 'rspec'
+    gem 'rspec_junit_formatter'
     gem 'rack-test'
 end
