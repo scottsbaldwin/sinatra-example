@@ -22,8 +22,4 @@ describe "Sinatra App" do
         last_response.body.should match('Blah')
     end
 
-    it "should fail" do
-        get '/blah'
-        last_response.should be_ok
-    end
 end
