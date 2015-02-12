@@ -1,0 +1,7 @@
+language: ruby
+
+rvm: 
+- 2.1.5
+
+script: 
+- rspec -f JUnit -o shippable/testresults/results.xml
