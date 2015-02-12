@@ -5,3 +5,4 @@ rvm:
 
 script: 
 - rspec -f RspecJunitFormatter -o shippable/testresults/results.xml
+- docker build -t sinatra_example .
